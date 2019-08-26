@@ -3,40 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   sort_int_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: exam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: ayano <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/14 10:10:32 by exam              #+#    #+#             */
-/*   Updated: 2019/08/14 11:04:00 by exam             ###   ########.fr       */
+/*   Created: 2019/08/26 09:48:48 by ayano             #+#    #+#             */
+/*   Updated: 2019/08/26 10:02:53 by ayano            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		find_smallest(int *tab, int i, unsigned int size)
+int         is_sorted(int *tab, unsigned int size)
 {
-	int		smallest = tab[i];
-	while (i < size)
+	unsigned int    i = 0;
+	while ((i + 1) < size)
 	{
-		if (tab[i] <= smallest)
-			smallest = tab[i];
+		if (tab[i] > tab[i + 1])
+			return (0);
 		i++;
 	}
-	return (smallest);	
+	return (1);
 }
 
-void	sort_int_tab(int *tab, unsigned int size)
+void		sort_int_tab(int *tab, unsigned int size)
 {
+	int				temp = tab[0];
+	int				check;
 	unsigned int	i = 0;
-	unsigned int	j = 0;
-	int				temp1 = 0;
-	int				temp2 = 0;
-	while (i < (int)size)
+	
+	while ((i + 1) < size)
 	{
-		temp2 = find_smallest(tab, i, size);
-		while (tab[j] != temp2)
-			j++;
-		temp1 = tab[i];
-		tab[i] = temp2;
-		tab[j] = temp1;
+		if (tab[i] > tab[i + 1])
+		{
+			temp = tab[i];
+			tab[i] = tab[i + 1];
+			tab[i + 1] = temp;
+		}
 		i++;
-		j = i;
 	}
+	check = is_sorted(tab, size);
+	if (check == 0)
+		sort_int_tab(tab, size);
 }
